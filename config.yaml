@@ -1,3 +1,5 @@
+current_user: nvme0
+
 # Where to plot and log.
 directories:
         # One directory in which to store all plot job logs (the STDOUT/
