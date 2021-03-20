@@ -15,6 +15,7 @@ import time
 import psutil      # apt-get install python-psutil
 import random
 import sys
+import yaml
 
 def job_phases_for_tmpdir(d, all_jobs):
     '''Return phase 2-tuples for jobs running on tmpdir d'''
@@ -25,10 +26,12 @@ def job_phases_for_dstdir(d, all_jobs):
     return sorted([j.progress() for j in all_jobs if j.dstdir == d])
 
 def is_current_user(user):
-    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
-    print('current user is:', cfg['current_user']))
-    print('process user is:', user)
-    return user is cfg['current_user'])
+    with open('config.yaml', 'r') as ymlfile:
+        cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
+
+    print('current user is:', cfg['current_user'])
+    print('process user is:', user, user == cfg['current_user'])
+    return user == cfg['current_user']
 
 def is_plotting_cmdline(cmdline):
     return (
