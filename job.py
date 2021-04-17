@@ -29,8 +29,6 @@ def is_current_user(user):
     with open('config.yaml', 'r') as ymlfile:
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
-    print('current user is:', cfg['current_user'])
-    print('process user is:', user, user == cfg['current_user'])
     return user == cfg['current_user']
 
 def is_plotting_cmdline(cmdline):
