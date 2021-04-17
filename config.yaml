@@ -1,4 +1,4 @@
-current_user: nvme500
+current_user: nvme2
 
 # Where to plot and log.
 directories:
@@ -6,7 +6,7 @@ directories:
   # STDERR of all plot jobs).  In order to monitor progress, plotman
   # reads these logs on a regular basis, so using a fast drive is
   # recommended.
-  log: /home/nvme500/logs
+  log: /home/nvme2/logs
 
   # One or more directories to use as tmp dirs for plotting.  The
   # scheduler will use all of them and distribute jobs among them.
@@ -16,7 +16,7 @@ directories:
   # If multiple directories share a common prefix, reports will
   # abbreviate and show just the uniquely identifying suffix.
   tmp:
-    - /media/nvme500
+    - /media/nvme2
 
   # Optional: tmp2 directory.  If specified, will be passed to
   # chia plots create as -2.  Only one tmp2 directory is supported.
@@ -35,12 +35,12 @@ directories:
   # Currently archival depends on an rsync daemon running on the remote
   # host, and that the module is configured to match the local path.
   # See code for details.
-  archive:
-    rsyncd_module: chia
-    rsyncd_path: ""
-    rsyncd_bwlimit: 250000 # Bandwidth limit in KB/s
-    rsyncd_host: 192.168.1.28
-    rsyncd_user: caleb
+#   archive:
+#     rsyncd_module: chia
+#     rsyncd_path: ""
+#     rsyncd_bwlimit: 250000 # Bandwidth limit in KB/s
+#     rsyncd_host: 192.168.1.28
+#     rsyncd_user: caleb
     # Optional index.  If omitted or set to 0, plotman will archive
     # to the first archive dir with free space.  If specified,
     # plotman will skip forward up to 'index' drives (if they exist).
@@ -57,28 +57,28 @@ scheduling:
   # have progresed at least this far.  Phase major corresponds to the
   # plot phase, phase minor corresponds to the table or table pair
   # in sequence.
-  tmpdir_stagger_phase_major: 2
-  tmpdir_stagger_phase_minor: 1
+  tmpdir_stagger_phase_major: 1
+  tmpdir_stagger_phase_minor: 4
 
   # Don't run more than this many jobs at a time on a single temp dir.
-  tmpdir_max_jobs: 1
+  tmpdir_max_jobs: 6
 
   # Don't run more than this many jobs at a time in total.
-  global_max_jobs: 12
+  global_max_jobs: 28
 
   # Don't run any jobs (across all temp dirs) more often than this.
-  global_stagger_m: 30
+  global_stagger_m: 10
 
   # How often the daemon wakes to consider starting a new plot job
-  polling_time_s: 3000000
+  polling_time_s: 30
 
 # Plotting parameters.  These are pass-through parameters to chia plots create.
 # See documentation at
 # https://github.com/Chia-Network/chia-blockchain/wiki/CLI-Commands-Reference#create
 plotting:
   k: 32
-  e: True # Use -e plotting option
-  n_threads: 2 # Threads per job
+  #e: True # Use -e plotting option
+  n_threads: 3 # Threads per job
   n_buckets: 128 # Number of buckets to split data into
   job_buffer: 5000 # Per job memory
   # If specified, pass through to the -f and -p options.  See CLI reference.
